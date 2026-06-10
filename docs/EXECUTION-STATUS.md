@@ -104,7 +104,7 @@ xcodebuild -project alt-tab-macos.xcodeproj -scheme Debug -configuration Debug \
 so the commit was not amended. The default `ai/build.sh` will succeed once the owner provisions a
 signing identity (see checklist).
 
-### 2.2 Tests — anti-relock guards PASS; legacy paywall tests RED (see §2.3)
+### 2.2 Tests — GREEN (anti-relock guards PASS; 16 legacy paywall tests skipped — §2.3)
 
 `xcodebuild test -scheme Test -configuration Debug` (signing disabled by `config/test-base.xcconfig`):
 
@@ -112,12 +112,19 @@ signing identity (see checklist).
 - The two anti-relock guards **PASS**:
   - `testDepaywallProNeverLocked` — passed (0.001s)
   - `testDepaywallStillProAfterTrialExpiry` — passed (0.001s)
-- **16 tests FAIL — ALL legacy paywall-behavior tests in `LicenseManagerTests` (see §2.3).** Zero
-  failures outside `LicenseManagerTests`; zero failures attributable to scaffolding.
+- **16 legacy paywall-behavior tests in `LicenseManagerTests` were RED** (they assert the now-dead
+  trial/expiry/lock/activate behavior). **RESOLVED in commit `1a914c88`** — each is now `XCTSkip`-marked
+  with an `alt-tab-free [depaywall]` reason. Zero failures outside `LicenseManagerTests`; zero attributable
+  to scaffolding.
 
-**Overall Test scheme result: RED** (`** TEST FAILED **`). See §2.3 for the BLOCKING implication.
+**Overall Test scheme result: GREEN** (`** TEST SUCCEEDED **`) — 493 executed, **16 skipped, 0 failures**;
+both `testDepaywall*` anti-relock guards RUN and PASS.
 
-### 2.3 KNOWN GAP (BLOCKING the release gate) — 16 legacy paywall tests contradict the patch
+### 2.3 RESOLVED (commit `1a914c88`) — 16 legacy paywall tests contradicted the patch
+
+> **RESOLVED 2026-06-10:** all 16 are now `XCTSkip`-marked (`alt-tab-free [depaywall]`), so the `Test`
+> scheme is GREEN and the two `testDepaywall*` guards remain the active anti-relock signal. The analysis
+> below is retained for the record.
 
 The depaywall patch forces `computeState()` to always return `.pro`. Sixteen pre-existing tests in
 `src/pro/license/LicenseManagerTests.swift` still assert the now-dead trial/expiry/lock behavior and
@@ -171,14 +178,13 @@ These require human judgment, secrets, or external accounts. Items marked **BLOC
 or the fork will not notarize, auto-update, gate releases, or stop phoning home. Grouped, with the
 per-component owner actions gathered from the scaffolding agents merged in.
 
-### 3.0 BLOCKING fix — make the Test scheme green (resolve §2.3)
+### 3.0 ✅ DONE (commit `1a914c88`) — Test scheme is GREEN
 
-- [ ] **Resolve the 16 RED legacy paywall tests** in `src/pro/license/LicenseManagerTests.swift` (see
-      §2.3). Until the `Test` scheme is GREEN, **Guard A (`run_tests.sh`) fails on every PR and every
-      push, so no release can ship and the anti-relock gate is meaningless.** Recommended: neutralize
-      each (`if false { … }` wrap + assert `.pro`) with an `alt-tab-free [depaywall]` marker; or delete
-      the 16 methods. Re-run the `Test` scheme and confirm GREEN (the two `testDepaywall*` guards must
-      still pass) before first publish.
+- [x] **Resolved the 16 RED legacy paywall tests** in `src/pro/license/LicenseManagerTests.swift` —
+      each is now `XCTSkip`-marked (`if true { throw XCTSkip("alt-tab-free [depaywall]: …") }`; the bare
+      `throw` form is rejected by `SWIFT_TREAT_WARNINGS_AS_ERRORS`). The `Test` scheme is now GREEN
+      (493 executed, 16 skipped, 0 failures); the two `testDepaywall*` anti-relock guards still RUN and
+      PASS. No owner action remains here.
 
 ### 3.1 Brand / identity / trademark (BLOCKING for a clean publish)
 
