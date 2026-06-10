@@ -1,20 +1,14 @@
-# AltTabFree
+# CommandTabFree
 
-<!--
-  OWNER-OVERRIDABLE-BEFORE-PUBLISH: the product name "AltTabFree", the bundle id
-  "io.github.koftwentytwo.alt-tab-free", and the fork GitHub URL below are placeholders.
-  Replace them with the owner's final published identity before the first release.
--->
-
-**AltTabFree is a fork of [AltTab](https://github.com/lwouis/alt-tab-macos)
+**CommandTabFree is a fork of [AltTab](https://github.com/lwouis/alt-tab-macos)
 (github.com/lwouis/alt-tab-macos), © Louis Pontoise, licensed GPL-3.0.**
 
 This fork neutralizes the AltTab Pro paywall — **all features are free.** It is
 **not affiliated with, sponsored by, or endorsed by** the original author. "AltTab"
-is used here only to credit the upstream project (nominative fair use); AltTabFree
+is used here only to credit the upstream project (nominative fair use); CommandTabFree
 is a separate, independently-distributed build.
 
-AltTabFree is itself released under the **GNU General Public License v3.0** — the same
+CommandTabFree is itself released under the **GNU General Public License v3.0** — the same
 license as upstream. See [`LICENCE.md`](LICENCE.md) for the full text and
 [`NOTICE.md`](NOTICE.md) for the GPL §5(a) statement of changes made in this fork.
 
@@ -33,7 +27,7 @@ The complete corresponding source for every released binary is this repository a
 matching release tag:
 
 ```
-https://github.com/koftwentytwo/alt-tab-free
+https://github.com/KofTwentyTwo/alt-tab-free
 ```
 
 For a given release `vX.Y.Z`, the source is the repository tree at that tag, including

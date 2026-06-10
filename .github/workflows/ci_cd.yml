@@ -36,9 +36,9 @@ env:
   BUILD_DIR: ${{ github.workspace }}
   XCODE_BUILD_PATH: DerivedData/Build/Products/Release
   VERSION_FILE: VERSION.txt
-  # alt-tab-free [depaywall]: OWNER-OVERRIDABLE-BEFORE-PUBLISH — must equal PRODUCT_NAME in
-  # config/local.xcconfig (PLAN §3.1/§4.3) or the build/package/appcast scripts mismatch the artifact.
-  APP_NAME: AltTabFree
+  # alt-tab-free [depaywall]: must equal PRODUCT_NAME in config/local.xcconfig
+  # (PLAN §3.1/§4.3) or the build/package/appcast scripts mismatch the artifact.
+  APP_NAME: CommandTabFree
 jobs:
   build:
     runs-on: macos-15 # all options: https://github.com/actions/runner-images/tree/main

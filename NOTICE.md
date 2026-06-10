@@ -5,22 +5,15 @@ has been modified, and gives the relevant date. It is a **living document**: whe
 sync from upstream changes this fork's modification surface, update the change list and
 the date below (see `docs/PLAN-maintained-fork.md` §6.2).
 
-<!--
-  OWNER-OVERRIDABLE-BEFORE-PUBLISH: the fork name "AltTabFree" and bundle id
-  "io.github.koftwentytwo.alt-tab-free" are placeholders; align with the published
-  identity before release. The upstream version and date below MUST reflect the
-  actual sync point at release time.
--->
-
 **Forked from:** [lwouis/alt-tab-macos](https://github.com/lwouis/alt-tab-macos) v11.3.0,
 © Louis Pontoise, licensed GPL-3.0.
 
-**Modified by:** the AltTabFree fork. This fork neutralizes the AltTab Pro paywall so that
+**Modified by:** the CommandTabFree fork. This fork neutralizes the AltTab Pro paywall so that
 all features are free.
 
 **Date of modification:** 2026-06-10.
 
-**License:** AltTabFree is released under the **GNU General Public License v3.0**, the same
+**License:** CommandTabFree is released under the **GNU General Public License v3.0**, the same
 license as upstream. The full license text is in [`LICENCE.md`](LICENCE.md), which is kept
 byte-for-byte identical to upstream and is never edited.
 

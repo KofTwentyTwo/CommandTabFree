@@ -18,9 +18,10 @@
 // =============================================================================
 
 // --- App identity (overrides base.xcconfig :3 / :4) ---
-// OWNER-OVERRIDABLE-BEFORE-PUBLISH: real product name + bundle id.
-PRODUCT_NAME = AltTabFree
-PRODUCT_BUNDLE_IDENTIFIER = io.github.koftwentytwo.alt-tab-free
+// DECIDED 2026-06-10 (KofTwentyTwo). The bundle id is FROZEN — never change it
+// (keychain + UserDefaults suite names derive from it; changing it orphans every user's state).
+PRODUCT_NAME = CommandTabFree
+PRODUCT_BUNDLE_IDENTIFIER = com.koftwentytwo.commandtabfree
 
 // --- Hosts (overrides base.xcconfig :20-21) ---
 // OWNER-OVERRIDABLE-BEFORE-PUBLISH: fork-owned hosts.
