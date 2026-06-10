@@ -25,14 +25,16 @@ final class LicenseManagerTests: XCTestCase {
 
     // MARK: - Launch / initialize
 
-    func testFirstLaunchStartsTrial() {
+    func testFirstLaunchStartsTrial() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         manager.initialize()
         guard case .trial(let days) = manager.state else { return XCTFail("expected .trial, got \(manager.state)") }
         XCTAssertEqual(days, 14)
         XCTAssertEqual(manager.trialStartDate, clock.now)
     }
 
-    func testSecondLaunchPreservesTrialStart() {
+    func testSecondLaunchPreservesTrialStart() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         manager.initialize() // day 0
         let originalStart = manager.trialStartDate
         clock.advance(days: 3)
@@ -44,27 +46,31 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertEqual(days, 11)
     }
 
-    func testTrialMidway() {
+    func testTrialMidway() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 7)
         manager.initialize()
         guard case .trial(let days) = manager.state else { return XCTFail() }
         XCTAssertEqual(days, 7)
     }
 
-    func testTrialLastDay() {
+    func testTrialLastDay() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 13)
         manager.initialize()
         guard case .trial(let days) = manager.state else { return XCTFail() }
         XCTAssertEqual(days, 1)
     }
 
-    func testTrialExpiresOnDay14() {
+    func testTrialExpiresOnDay14() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 14)
         manager.initialize()
         XCTAssertEqual(manager.state, .trialExpired)
     }
 
-    func testTrialExpiresWellPastDuration() {
+    func testTrialExpiresWellPastDuration() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 365)
         manager.initialize()
         XCTAssertEqual(manager.state, .trialExpired)
@@ -78,14 +84,16 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertEqual(manager.state, .pro)
     }
 
-    func testPreviouslyInvalidatedLicenseIsTrialExpired() {
+    func testPreviouslyInvalidatedLicenseIsTrialExpired() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupActivatedLicense(variantId: nil)
         defaults.set(false, forKey: "lastValidationResult")
         manager.initialize()
         XCTAssertEqual(manager.state, .trialExpired)
     }
 
-    func testLicenseWithoutValidationResultIsTrialExpired() {
+    func testLicenseWithoutValidationResultIsTrialExpired() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         // license in keychain but lastValidationResult was never set — defensive: treat as expired
         keychain.setValue("KEY", account: LicenseManager.keychainKeyAccount)
         keychain.setValue("instance-1", account: LicenseManager.keychainInstanceAccount)
@@ -127,7 +135,8 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertEqual(manager.customerEmail, "alice@example.com")
     }
 
-    func testActivateFailurePreservesState() {
+    func testActivateFailurePreservesState() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 3)
         manager.initialize()
         api.activateResult = .failure(LicenseAPIError.activationRejected("invalid"))
@@ -151,7 +160,8 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertNil(keychain.value(account: LicenseManager.keychainVariantAccount))
     }
 
-    func testActivateSeatLimitExceededSurfacesInstances() {
+    func testActivateSeatLimitExceededSurfacesInstances() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 3)
         manager.initialize()
         let instances = [
@@ -177,7 +187,8 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertNil(keychain.value(account: LicenseManager.keychainKeyAccount))
     }
 
-    func testActivateFailsAndRollsBackIfKeychainWriteFails() {
+    func testActivateFailsAndRollsBackIfKeychainWriteFails() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 3)
         manager.initialize()
         api.activateResult = .success(ActivateResult(instanceId: "inst-1", variantId: "pro", customerEmail: "alice@example.com"))
@@ -206,7 +217,8 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertNil(defaults.object(forKey: "customerEmail"))
     }
 
-    func testActivateRollsBackPartialKeychainWritesOnLaterFailure() {
+    func testActivateRollsBackPartialKeychainWritesOnLaterFailure() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 3)
         manager.initialize()
         api.activateResult = .success(ActivateResult(instanceId: "inst-1", variantId: "pro", customerEmail: nil))
@@ -377,7 +389,8 @@ final class LicenseManagerTests: XCTestCase {
 
     // MARK: - State change callback
 
-    func testOnStateChangedFiresOnInitialize() {
+    func testOnStateChangedFiresOnInitialize() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         var observed: [LicenseState] = []
         manager.onStateChanged = { observed.append($0) }
         manager.initialize()
@@ -404,14 +417,16 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertFalse(manager.isProLocked)
     }
 
-    func testIsProLockedTrueAfterTrialExpiry() {
+    func testIsProLockedTrueAfterTrialExpiry() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         setupTrial(daysAgo: 14)
         manager.initialize()
         XCTAssertEqual(manager.state, .trialExpired)
         XCTAssertTrue(manager.isProLocked, "no grace period: degradable features lock immediately on trial expiry")
     }
 
-    func testIsProLockedTrueWhenKeychainInvalidated() {
+    func testIsProLockedTrueWhenKeychainInvalidated() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         // Simulate a keychain-backed license that failed revalidation → computeState returns .trialExpired.
         setupActivatedLicense(variantId: nil)
         defaults.set(false, forKey: "lastValidationResult")
@@ -420,7 +435,8 @@ final class LicenseManagerTests: XCTestCase {
         XCTAssertTrue(manager.isProLocked)
     }
 
-    func testOnBeforeProUnlockFiresBeforeStateFlipsToPro() {
+    func testOnBeforeProUnlockFiresBeforeStateFlipsToPro() throws {
+        if true { throw XCTSkip("alt-tab-free [depaywall]: paywall behaviour intentionally neutralized — computeState() is forced .pro; see docs/AUDIT.md") }
         manager.initialize()
         api.activateResult = .success(ActivateResult(instanceId: "i", variantId: nil, customerEmail: nil))
         var observedStateWhenHookFired: LicenseState?
