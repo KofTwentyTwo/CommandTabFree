@@ -1,4 +1,9 @@
-github: lwouis
-patreon: alt_tab_macos
-ko_fi: alt_tab
-custom: ["paypal.com/donate/?hosted_button_id=ACYAC3UYCM7CN"]
+# alt-tab-free [depaywall]: upstream's FUNDING.yml routed the GitHub "Sponsor" button on the fork's
+# repo to lwouis (github: lwouis / patreon: alt_tab_macos / ko_fi: alt_tab / a lwouis PayPal button) —
+# i.e. every donation would have gone to the author the fork just de-paywalled (PLAN §3.5). It has
+# been emptied so NO sponsor button renders and no donation routes to the upstream author.
+#
+# OWNER-OVERRIDABLE-BEFORE-PUBLISH: to accept sponsorships for THIS fork, uncomment and fill in your
+# own handles (do NOT re-add lwouis's). Otherwise leave this file empty / delete it.
+# github: <fork-owner-handle>
+# custom: ["https://<fork-domain>/donate"]

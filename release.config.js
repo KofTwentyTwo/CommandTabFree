@@ -18,9 +18,12 @@ module.exports = {
             'changelogFile': 'changelog.md',
         }],
         ['@semantic-release/git', {
+            // alt-tab-free [depaywall]: 'appcast.xml' REMOVED from assets (PLAN §3.3/§4.3). The fork
+            // publishes the Sparkle feed OUT OF TREE (gh-pages) via scripts/update_appcast.sh, and
+            // appcast.xml is removed from the tree. If it stayed here, semantic-release would try to
+            // commit the now-untracked file back every release.
             'assets': [
                 'changelog.md',
-                'appcast.xml',
                 'README.md',
             ],
         }],

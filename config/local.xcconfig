@@ -1,0 +1,48 @@
+// =============================================================================
+// alt-tab-free — fork identity overlay (committed; see docs/PLAN-maintained-fork.md §3.1)
+// =============================================================================
+//
+// This file is #include?'d LAST by config/release.xcconfig and config/debug.xcconfig,
+// so "last assignment wins": every value below overrides config/base.xcconfig WITHOUT
+// editing base.xcconfig (which upstream churns). Net pbxproj/base.xcconfig edits: zero.
+//
+// >>> OWNER MUST SET REAL VALUES BEFORE PUBLISH <<<
+// Every placeholder below is OWNER-OVERRIDABLE-BEFORE-PUBLISH and is clearly marked.
+// Until these are real, the fork will NOT notarize, auto-update, or serve a working
+// feedback/appcast endpoint. See ownerActionsNeeded in the scaffolding report.
+//
+// KEYCHAIN-SUITE INVARIANT (BLOCKING): PRODUCT_BUNDLE_IDENTIFIER below derives the
+// keychain + UserDefaults suite names (LicenseManager.swift:4-5 read App.bundleIdentifier).
+// PICK THE FORK'S BUNDLE ID ONCE AND FREEZE IT. Any later change orphans every user's
+// stored prefs/state. See §3.1 OWNER DECISION (a)=fresh id / (b)=reuse+migrate.
+// =============================================================================
+
+// --- App identity (overrides base.xcconfig :3 / :4) ---
+// OWNER-OVERRIDABLE-BEFORE-PUBLISH: real product name + bundle id.
+PRODUCT_NAME = AltTabFree
+PRODUCT_BUNDLE_IDENTIFIER = io.github.koftwentytwo.alt-tab-free
+
+// --- Hosts (overrides base.xcconfig :20-21) ---
+// OWNER-OVERRIDABLE-BEFORE-PUBLISH: fork-owned hosts.
+// TODO: replace fork.invalid with the fork's real web host. DOMAIN must serve
+//       https://<DOMAIN>/appcast.xml (Sparkle feed) and /support, or update checks /
+//       the in-app Support affordance 404. fork.invalid is a deliberately NON-routable
+//       placeholder (RFC 6761 reserved .invalid TLD) so nothing phones home before publish.
+DOMAIN = fork.invalid
+// TODO: API_DOMAIN drives the user-feedback POST (FeedbackWindow). The activate
+//       fingerprint POST is closed separately at the handleCustomUrl handler (§2/§3.4),
+//       so this may be made ROUTABLE for feedback without re-arming exfiltration.
+//       Decide feedback strategy at bootstrap (§3.4 option a/b/c).
+API_DOMAIN = fork.invalid/api
+
+// --- Code signing (overrides release.xcconfig :5) ---
+// TODO: fork Developer ID — set to the fork's own signing identity, e.g.
+//       CODE_SIGN_IDENTITY = Developer ID Application: <Fork Org> (TEAMID)
+//       Required for notarization/Gatekeeper. Also re-sign vendored Sparkle helpers
+//       under this same Developer ID (§3.3 / §4.6) or notarization rejects.
+// CODE_SIGN_IDENTITY = Developer ID Application: <Fork Org> (TEAMID)
+
+// --- Telemetry off (overrides base.xcconfig; AppCenter no-ops on empty secret) ---
+// Intentionally empty: telemetry is disabled (reinforced by Edit 3, §2).
+// CI must NOT re-append an APPCENTER_SECRET line (see scripts/replace_environment_variables_in_app.sh).
+APPCENTER_SECRET =

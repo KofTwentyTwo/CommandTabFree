@@ -59,7 +59,11 @@
 
 	<!-- ===== Sparkle (auto-update framework — reads these directly from the bundle) ===== -->
 	<key>SUPublicEDKey</key>
-	<string>2e9SQOBoaKElchSa/4QDli/nvYkyuDNfynfzBF6vJK4=</string>
+	<!-- TODO: fork EdDSA public key — OWNER-OVERRIDABLE-BEFORE-PUBLISH.
+	     Generate a FRESH Sparkle keypair (§3.3); paste the public key as the value
+	     below and keep the private key in CI secrets (SPARKLE_ED_PRIVATE_KEY). The
+	     placeholder below is NOT lwouis's key and will NOT verify any real update. -->
+	<string>REPLACE_WITH_FORK_SUPUBLIC_EDKEY</string>
 	<key>SUEnableAutomaticChecks</key>
 	<string>true</string>
 	<key>SUScheduledCheckInterval</key>

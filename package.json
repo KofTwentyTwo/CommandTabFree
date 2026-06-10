@@ -3,7 +3,7 @@
   "name": "alt-tab-macos",
   "version": "1.0.0",
   "author": "",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",

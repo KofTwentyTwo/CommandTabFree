@@ -1,0 +1,94 @@
+# alt-tab-free — anti-relock guard workflow (docs/PLAN-maintained-fork.md §4.4)
+#
+# A SEPARATE, fork-owned workflow that runs the anti-relock guards on every PR,
+# INDEPENDENTLY of ci_cd.yml. Rationale (§4.4): ci_cd.yml is the file most likely to take an
+# upstream conflict, and a careless "keep ours/theirs" resolution could silently strip its
+# pull_request: trigger or its release-step gating — at which point the in-ci_cd.yml guards
+# would stop gating PRs with NO error. A guard workflow that does NOT inherit ci_cd.yml's
+# trigger survives that. This is the reviewer's primary green/red signal on a sync PR.
+#
+# Three guards, each fails the job LOUDLY:
+#   A — the Test scheme (the mock-injected anti-relock unit tests in LicenseManagerTests.swift)
+#   B — a target-independent grep that the de-paywall flip is still present in computeState()
+#   C — a tree-wide grep that no unresolved git conflict markers survive into a merge/release
+#
+# Defense-in-depth note: Guards B + C are ALSO wired into ci_cd.yml as the FIRST push-job
+# steps (CI agent owns that) so a relock/conflict-laden tree aborts the release BEFORE the tag
+# is pushed or the binary signed, even if this PR gate is ever missing/misconfigured (§4.4).
+name: guard
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  # Guards B + C are near-instant greps; run them on cheap ubuntu so a relock or a still-
+  # conflicted tree fails FAST, before the expensive macOS Guard-A job even starts (§4.5).
+  grep-guards:
+    name: anti-relock greps (B + C)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      # GUARD B — verify the de-paywall flip is still present at the single state producer.
+      # §4.4 pitfall: a bare `return .pro` grep MATCHES THE UNPATCHED FILE (computeState() already
+      # contains `return .pro` in the keychain-valid branch on a fully relocked tree), so it is NOT
+      # load-bearing. The load-bearing signals are (1) the `depaywall` marker comment, which exists
+      # ONLY because the fork added it, AND (2) the `if false { … }` wrap that the patch introduces
+      # around the original (now dead) body. Both are absent on an unpatched/relocked upstream file.
+      - name: Guard B — de-paywall marker + if-false wrap present in computeState()
+        run: |
+          set -euo pipefail
+          F=src/pro/license/LicenseManager.swift
+          if [ ! -f "$F" ]; then
+            echo "::error::Guard B: $F not found — chokepoint moved? Refresh the de-paywall patch (§6.2)."
+            exit 1
+          fi
+          grep -q 'depaywall' "$F" || {
+            echo "::error::PAYWALL RELOCKED: 'depaywall' marker missing from $F — the de-paywall flip was lost in a merge. Refresh the patch (§6.2)."
+            exit 1
+          }
+          grep -Eq 'if[[:space:]]+false[[:space:]]*\{' "$F" || {
+            echo "::error::PAYWALL RELOCKED: 'if false { … }' wrap missing from $F — the de-paywall body-suppress was lost. Refresh the patch (§6.2)."
+            exit 1
+          }
+          echo "Guard B OK: de-paywall marker + if-false wrap present in $F."
+
+      # GUARD C — no unresolved git conflict markers anywhere in the tree. The §4.2 sync cron
+      # deliberately commits a conflicted tree (markers + --no-verify) for a human to resolve;
+      # nothing else guarantees the human removed EVERY marker before merge. A markers-laden
+      # commit merged to master becomes a permanent ancestor of the published tag (un-compilable
+      # source), contradicting §5(1). Exclude docs/ so this plan's own literal marker examples
+      # don't trip the grep.
+      - name: Guard C — no unresolved merge conflict markers
+        run: |
+          set -euo pipefail
+          if git -c grep.lineNumber=false grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':(exclude)docs/'; then
+            echo "::error::UNRESOLVED CONFLICT MARKERS present — resolve before merge/release (§4.4 Guard C)."
+            exit 1
+          fi
+          echo "Guard C OK: no unresolved conflict markers."
+
+  # GUARD A — the behavioral anti-relock unit tests (mock-injected LicenseManager) via the Test
+  # scheme. §4.4: this MUST run on macos-15 with the pinned Xcode — run_tests.sh is `xcodebuild
+  # test`, which cannot run on ubuntu. If left on ubuntu, Guard A silently degrades to greps-only
+  # and the behavioral relock test never executes (the exact silent-disarming class this plan
+  # guards against). Bootstrap assertion (§4.4): on the deliberately-relocked acceptance PR,
+  # confirm THIS job produced a real test result that is RED on the relock — not just the greps.
+  unit-tests:
+    name: anti-relock unit tests (A)
+    runs-on: macos-15   # MUST match ci_cd.yml — `xcodebuild test` needs the pinned Xcode
+    steps:
+      - uses: actions/checkout@v6
+      # Pin the same Xcode as ci_cd.yml (§4.5 bootstrap invariant — re-pin on every upstream bump).
+      - run: sudo xcode-select -s /Applications/Xcode_26.0.1.app/Contents/Developer
+      # run_tests.sh runs the `Test` scheme (-configuration Release), which includes the
+      # appended anti-relock tests in src/pro/license/LicenseManagerTests.swift:
+      #   testDepaywallProNeverLocked            — load-bearing `state == .pro` assert
+      #   testDepaywallStillProAfterTrialExpiry  — discriminating (expired-trial) assert
+      # A relock makes computeState() fall back to computeTrialState() and these go RED.
+      - name: Guard A — run the Test scheme (anti-relock unit tests)
+        run: scripts/run_tests.sh

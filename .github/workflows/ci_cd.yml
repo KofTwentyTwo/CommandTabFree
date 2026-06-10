@@ -1,7 +1,27 @@
+# alt-tab-free: fork-owned CI/CD workflow (diverged from upstream lwouis/alt-tab-macos).
+# Upstream's ci_cd.yml fires `on: push: branches: [master]` ONLY and is the sole workflow,
+# so this fork ADDS a `pull_request:` trigger to gate the sync PR pre-merge (see PLAN §4.2),
+# gates every release/push-only step under `if: github.event_name == 'push'`, and wires the
+# anti-relock + conflict-marker greps as the FIRST push-job steps so a relocked or conflicted
+# tree aborts BEFORE update_appcast.sh (Sparkle sign), semantic-release (tag push), and the
+# gh-release. This file is in the §6.2 "keep ours" recurring-conflict set — on an upstream
+# ci_cd.yml change, reconcile manually and re-confirm the `pull_request:` trigger survives.
 on:
   push:
     branches:
       - master
+  # alt-tab-free [depaywall]: PR trigger so the sync PR runs the guards pre-merge (PLAN §4.2).
+  # A separate fork-owned .github/workflows/guard.yml ALSO runs the guards on pull_request, so a
+  # careless upstream-conflict resolution that strips this trigger cannot silently disarm the gate.
+  pull_request:
+    branches:
+      - master
+# alt-tab-free [depaywall]: GitHub defaults GITHUB_TOKEN to read-only since 2023; semantic-release
+# (@semantic-release/git) pushes commits+tags to master and softprops/action-gh-release creates the
+# release — both need contents:write, else they 403 and the appcast enclosure 404s for auto-update
+# (PLAN §4.3).
+permissions:
+  contents: write
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   APPCENTER_SECRET: ${{ secrets.APPCENTER_SECRET }}
@@ -16,7 +36,9 @@ env:
   BUILD_DIR: ${{ github.workspace }}
   XCODE_BUILD_PATH: DerivedData/Build/Products/Release
   VERSION_FILE: VERSION.txt
-  APP_NAME: AltTab
+  # alt-tab-free [depaywall]: OWNER-OVERRIDABLE-BEFORE-PUBLISH — must equal PRODUCT_NAME in
+  # config/local.xcconfig (PLAN §3.1/§4.3) or the build/package/appcast scripts mismatch the artifact.
+  APP_NAME: AltTabFree
 jobs:
   build:
     runs-on: macos-15 # all options: https://github.com/actions/runner-images/tree/main
@@ -38,32 +60,111 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: ${{ steps.pre-checkout.outputs.fetch-depth }}
+      # alt-tab-free [depaywall]: Guard B + Guard C run FIRST on the push job (before run_tests.sh,
+      # and therefore before update_appcast.sh's Sparkle sign + semantic-release's tag push) so a
+      # relock or a still-conflicted tree aborts the job BEFORE any irreversible side-effect (PLAN
+      # §4.4 "Where the guards run"). They are near-instant target-independent greps, so running them
+      # first is free. They also run on the PR path for the fastest red signal. A second copy sits
+      # just before action-gh-release as belt-and-suspenders.
+      - name: anti-relock — verify de-paywall marker present (Guard B)
+        run: |
+          grep -q 'alt-tab-free \[depaywall\]' src/pro/license/LicenseManager.swift \
+            || { echo "PAYWALL RELOCKED: depaywall marker missing from computeState()"; exit 1; }
+          # The marker proves the patch is present; pair with the if-false wrap the patch introduces.
+          # A bare `return .pro` grep is NOT load-bearing (it matches the unpatched line 187 too).
+          grep -Eq 'if[[:space:]]+false[[:space:]]*\{' src/pro/license/LicenseManager.swift \
+            || { echo "PAYWALL RELOCKED: 'if false { ... }' wrap missing from computeState()"; exit 1; }
+      - name: anti-conflict — no unresolved merge markers (Guard C)
+        run: |
+          if git -c grep.lineNumber=false grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':(exclude)docs/'; then
+            echo "UNRESOLVED CONFLICT MARKERS present — resolve before merge/release"; exit 1
+          fi
       - uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version: 16 # PLAN §4.3: keep node-16; the package.json engines mismatch only warns
           cache: 'npm'
       - run: sudo xcode-select -s /Applications/Xcode_26.0.1.app/Contents/Developer
       - run: scripts/print_env.sh
       - run: npm ci
+      # alt-tab-free [depaywall]: commitlint is gated to the push path. On push it lints the whole
+      # pushed range, which drags in upstream's non-conforming messages on a `chore(sync)` merge —
+      # this is handled by an `ignores` predicate in commitlint.config.js (PLAN §4.3) that drops the
+      # synthetic merge commit and upstream's own messages; do NOT break commitlint on --no-ff merges.
+      # $GITHUB_EVENT_BEFORE/AFTER are push-context (empty on pull_request), so a PR-safe variant runs
+      # below on the PR path instead.
       - run: npx commitlint --from "$GITHUB_EVENT_BEFORE" --to "$GITHUB_EVENT_AFTER" --verbose
+        if: github.event_name == 'push'
+      # alt-tab-free [depaywall]: PR-safe commitlint — lints base..head (valid on pull_request),
+      # paired with the commitlint.config.js `ignores` predicate (PLAN §4.2/§4.3).
+      - run: npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.sha }}" --verbose
+        if: github.event_name == 'pull_request'
+      # Runs on both push and PR: catches an un-regenerated l10n/generated-file diff (PLAN §4.2/§4.5).
       - run: scripts/ensure_generated_files_are_up_to_date.sh
+      # alt-tab-free [depaywall]: release-path — a semantic-release dry-run against a PR head is
+      # meaningless and can mis-bump, so gate to push (PLAN §4.2).
       - run: scripts/determine_next_version.sh
+        if: github.event_name == 'push'
       - run: scripts/replace_environment_variables_in_app.sh
+        if: github.event_name == 'push'
       - run: scripts/codesign/setup_ci_master.sh
+        if: github.event_name == 'push'
+      # Guard A — the anti-relock unit test (appended to LicenseManagerTests.swift). Runs on both
+      # push and PR; on the push path it sits before the sign/tag steps below (PLAN §4.4).
       - run: scripts/run_tests.sh
       - run: scripts/build_app.sh
+        if: github.event_name == 'push'
       - run: scripts/package_and_notarize_release.sh
-      - run: scripts/upload_symbols_to_appcenter.sh
+        if: github.event_name == 'push'
+      # alt-tab-free [depaywall]: upload_symbols_to_appcenter.sh REMOVED — telemetry is off (PLAN §3.4).
       - run: scripts/update_appcast.sh
+        if: github.event_name == 'push'
       - run: scripts/update_readme_and_website.sh
+        if: github.event_name == 'push'
       - run: npx semantic-release
+        if: github.event_name == 'push'
       - id: set_release_info
         run: scripts/extract_latest_changelog.sh
+        if: github.event_name == 'push'
+      # alt-tab-free [depaywall]: belt-and-suspenders copy of Guard B + Guard C immediately before the
+      # release is created. The load-bearing copy is at the top of the job (pre-tag-push); this second
+      # copy guards the gh-release object itself (PLAN §4.4).
+      - name: anti-relock + anti-conflict re-check (belt-and-suspenders)
+        if: github.event_name == 'push'
+        run: |
+          grep -q 'alt-tab-free \[depaywall\]' src/pro/license/LicenseManager.swift \
+            || { echo "PAYWALL RELOCKED: depaywall marker missing from computeState()"; exit 1; }
+          grep -Eq 'if[[:space:]]+false[[:space:]]*\{' src/pro/license/LicenseManager.swift \
+            || { echo "PAYWALL RELOCKED: 'if false { ... }' wrap missing from computeState()"; exit 1; }
+          if git -c grep.lineNumber=false grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':(exclude)docs/'; then
+            echo "UNRESOLVED CONFLICT MARKERS present — resolve before release"; exit 1
+          fi
+      # alt-tab-free [depaywall]: point the release at THIS fork's repo via the ambient GITHUB_TOKEN
+      # (release.config.js has no @semantic-release/github plugin, so softprops is the sole release
+      # creator — PLAN §4.3). repository defaults to ${{ github.repository }} = the fork.
       - uses: softprops/action-gh-release@v3
+        if: github.event_name == 'push'
         with:
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.set_release_info.outputs.tag_name }}
           body: ${{ steps.set_release_info.outputs.body }}
           files: ${{ env.XCODE_BUILD_PATH }}/*.zip
-      - run: scripts/update_website.sh
-        env:
-          GH_TOKEN: ${{ secrets.WEBSITE_DISPATCH_TOKEN }}
+      # alt-tab-free [depaywall]: advance the committed last-synced-tag state to the released tag and
+      # commit it, so the upstream-sync cron syncs the OLDEST upstream tag strictly newer than this —
+      # not "newest tag minus --is-ancestor". This makes resolve-in-order hold by construction and
+      # prevents a closed-unmerged sync PR from silently dropping commits (PLAN §4.2). Skipped with
+      # [skip ci] so it does not re-trigger the workflow.
+      - name: advance .fork-sync-state to the released tag
+        if: github.event_name == 'push'
+        run: |
+          tag="${{ steps.set_release_info.outputs.tag_name }}"
+          [ -n "$tag" ] || { echo "no tag_name output — skipping .fork-sync-state advance"; exit 0; }
+          printf '%s\n' "$tag" > .fork-sync-state
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- .fork-sync-state; then
+            git add .fork-sync-state
+            git commit -m "chore(sync-state): advance to $tag [skip ci]"
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi
+      # alt-tab-free [depaywall]: update_website.sh (lwouis website dispatch) REMOVED (PLAN §3.4/§4.2).
