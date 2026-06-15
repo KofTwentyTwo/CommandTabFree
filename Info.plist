@@ -59,13 +59,13 @@
 
 	<!-- ===== Sparkle (auto-update framework — reads these directly from the bundle) ===== -->
 	<key>SUPublicEDKey</key>
-	<!-- TODO: fork EdDSA public key — OWNER-OVERRIDABLE-BEFORE-PUBLISH.
-	     Generate a FRESH Sparkle keypair (§3.3); paste the public key as the value
-	     below and keep the private key in CI secrets (SPARKLE_ED_PRIVATE_KEY). The
-	     placeholder below is NOT lwouis's key and will NOT verify any real update. -->
-	<string>REPLACE_WITH_FORK_SUPUBLIC_EDKEY</string>
+	<!-- Fork EdDSA public key for Sparkle update verification. The matching private key
+	     is held as CI secret SPARKLE_ED_PRIVATE_KEY (see docs/EXECUTION-STATUS.md §3.3).
+	     Auto-checks stay off (below) until DOMAIN serves a real appcast host. -->
+	<string>1YfoCJDk/T8GQx1Gpf3O4ApFgDkBiN6oe/z/Kfnxs/M=</string>
 	<key>SUEnableAutomaticChecks</key>
-	<string>true</string>
+	<!-- alt-tab-free: off until DOMAIN serves a real appcast (avoids failed update checks). -->
+	<string>false</string>
 	<key>SUScheduledCheckInterval</key>
 	<string>604800</string>
 
