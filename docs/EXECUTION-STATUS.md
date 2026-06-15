@@ -188,23 +188,18 @@ per-component owner actions gathered from the scaffolding agents merged in.
 
 ### 3.1 Brand / identity / trademark (BLOCKING for a clean publish)
 
-- [ ] **Pick a trademark-safe fork name** (avoid "AltTab"/"alt-tab" confusion) and run the PLAN §3.2
-      brand sweep across the tree, then **regenerate l10n** (`genstrings` per the §3.2 procedure) for
-      every file the sweep moved/renamed.
-- [ ] **Set the REAL `PRODUCT_NAME`** in `config/local.xcconfig` if `AltTabFree` is not final, AND set
-      `ci_cd.yml` `APP_NAME` equal to it (currently placeholder `AltTabFree`).
-- [ ] **Set the REAL fork bundle id in `config/local.xcconfig` and FREEZE it once** (placeholder:
-      `io.github.koftwentytwo.alt-tab-free`). Changing it later orphans every user's keychain +
-      UserDefaults state (LicenseManager derives the suite names from `App.bundleIdentifier`). Decide
-      PLAN §3.1: (a) fresh id, or (b) reuse-existing-id + migration. **Freeze the bundle id.**
-- [ ] **Replace placeholder identity in `README.md` AND `NOTICE.md`** — final product name, final
-      bundle id, and the fork GitHub URL (placeholder `https://github.com/koftwentytwo/alt-tab-free`).
+- [x] **Fork name + brand sweep + l10n (DONE 2026-06-15)** — name is **CommandTabFree** (trademark-distinct);
+      brand sweep done; l10n rebranded across base/en + all ~20 language tables, upstream attribution kept.
+- [x] **`PRODUCT_NAME = CommandTabFree` (DONE)** in `config/local.xcconfig`. Verify `ci_cd.yml` `APP_NAME`
+      matches when CI is wired.
+- [x] **Fork bundle id FROZEN (DONE)** — `com.koftwentytwo.commandtabfree` (option (a) fresh id) in `config/local.xcconfig`.
+- [x] **`README.md` + `NOTICE.md` (DONE)** — final product name, real fork GitHub URL; README now includes the brew install.
 - [ ] **At release time, set `NOTICE.md`'s upstream version + modification date** to the actual sync
       point (currently `v11.3.0` / `2026-06-10`). Keep `NOTICE.md` current per PLAN §6.2 on every future
       sync that changes the fork's modification surface. **Note:** `NOTICE.md` lists
       "App.handleCustomUrl (activate disabled)" as a change — the §2 Edit-2 neutralization HAS landed
       (`App.swift:474`), so that line is accurate; if you ever opt NOT to neutralize it, remove that line.
-- [ ] **Replace the app icon** (do not ship lwouis's mark).
+- [~] **App icon — placeholder DONE, real artwork TODO** — ⌘⇥ glyph shipped for app + menu bar (NOT lwouis's mark); replace with final artwork before a notarized public release.
 - [ ] **Add `config/local.xcconfig` and `package.json` to the PLAN §6.2 "keep ours" recurring-conflict
       set** so a future merge can't re-introduce upstream identity or the MIT license string.
 

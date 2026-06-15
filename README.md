@@ -12,6 +12,17 @@ CommandTabFree is itself released under the **GNU General Public License v3.0** 
 license as upstream. See [`LICENCE.md`](LICENCE.md) for the full text and
 [`NOTICE.md`](NOTICE.md) for the GPL §5(a) statement of changes made in this fork.
 
+## Install
+
+```sh
+brew install --cask koftwentytwo/tap/commandtabfree
+```
+
+CommandTabFree is **not yet signed or notarized**, so the cask removes the download
+quarantine to avoid a Gatekeeper prompt (right-click the app and choose **Open** if you
+install the `.zip` by hand). On first launch, grant **Accessibility** and **Screen
+Recording** in System Settings. Universal binary (Apple Silicon + Intel), macOS 10.13+.
+
 ## Based on AltTab by Louis Pontoise
 
 This software is built on AltTab (`lwouis/alt-tab-macos`) by Louis Pontoise and its
