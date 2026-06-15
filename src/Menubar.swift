@@ -440,6 +440,6 @@ class PermissionCallout: StackView {
             case .both: subject = NSLocalizedString("Thumbnails and window previews", comment: "Menubar callout subject")
             case .none: return ""
         }
-        return String(format: NSLocalizedString("AltTab is running without Screen Recording permissions. %@ won’t show.", comment: "Menubar callout. %@ is one or more feature names, e.g. Thumbnails"), subject)
+        return String(format: NSLocalizedString("CommandTabFree is running without Screen Recording permissions. %@ won’t show.", comment: "Menubar callout. %@ is one or more feature names, e.g. Thumbnails"), subject)
     }
 }

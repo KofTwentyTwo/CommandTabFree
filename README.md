@@ -38,14 +38,13 @@ deliberately not conveyed; GPL-3.0 does not require these to be distributed.
 ---
 
 <!--
-  Below: upstream AltTab's original README banner, retained for context and to credit
-  the source project. The "Get AltTab" / sponsor links point at the upstream project,
-  not this fork.
+  Below: upstream credit. CommandTabFree is a fork of AltTab by Louis Pontoise.
+  This links to the original project for attribution, not as a download CTA for this fork.
 -->
 
 <div align="center">
 
-<a href="https://alt-tab.app/"><img src="docs/readme/main.svg" alt="AltTab Pro — 7.4M downloads — 15K GitHub stars — Get AltTab"/></a>
+CommandTabFree is a free, GPL-3.0 fork of <a href="https://github.com/lwouis/alt-tab-macos">AltTab</a> by Louis Pontoise.
 
 <a href="https://jb.gg/OpenSource"><img src="docs/readme/sponsor.svg" alt="Sponsored by JetBrains" width="900"/></a>
 

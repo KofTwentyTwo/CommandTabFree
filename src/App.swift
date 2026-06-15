@@ -13,7 +13,7 @@ class App: AppCenterApplication {
     static let name = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as! String
     static let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
     static let licence = Bundle.main.object(forInfoDictionaryKey: "NSHumanReadableCopyright") as! String
-    static let repository = "https://github.com/lwouis/alt-tab-macos"
+    static let repository = "https://github.com/KofTwentyTwo/alt-tab-free"
     static let appIconReps = CGImage.allNamed("app.icns")
 
     static func appIcon(for size: NSSize) -> CGImage {

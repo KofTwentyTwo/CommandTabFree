@@ -107,7 +107,7 @@ class CustomRecorderControl: RecorderControl {
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.messageText = NSLocalizedString("Conflicting shortcut", comment: "")
-        alert.informativeText = String(format: NSLocalizedString("macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. AltTab cannot use them.\n\nYour change would assign one of these to: %@.", comment: ""), label)
+        alert.informativeText = String(format: NSLocalizedString("macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. CommandTabFree cannot use them.\n\nYour change would assign one of these to: %@.", comment: ""), label)
         alert.addButton(withTitle: NSLocalizedString("Unassign existing shortcut and continue", comment: ""))
         let cancelButton = alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
         cancelButton.keyEquivalent = "\u{1b}"

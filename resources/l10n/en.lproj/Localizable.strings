@@ -6,7 +6,7 @@
 "4-finger Horizontal Swipe" = "4-finger Horizontal Swipe";
 "4-finger Vertical Swipe" = "4-finger Vertical Swipe";
 "A debug profile (versions, settings, hardware) is attached to help diagnose the issue." = "A debug profile (versions, settings, hardware) is attached to help diagnose the issue.";
-"A new version of AltTab is available" = "A new version of AltTab is available";
+"A new version of CommandTabFree is available" = "A new version of CommandTabFree is available";
 "About %@" = "About %@";
 "Accessibility" = "Accessibility";
 "Activate" = "Activate";
@@ -26,14 +26,14 @@
 "All Spaces" = "All Spaces";
 "Allowed" = "Allowed";
 "Alphabetical Order" = "Alphabetical Order";
-"AltTab crashed last time you used it. Sending a crash report will help get the issue fixed" = "AltTab crashed last time you used it. Sending a crash report will help get the issue fixed";
+"CommandTabFree crashed last time you used it. Sending a crash report will help get the issue fixed" = "CommandTabFree crashed last time you used it. Sending a crash report will help get the issue fixed";
 "AltTab is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial." = "AltTab is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial.";
-"AltTab is running without Screen Recording permissions. %@ won’t show." = "AltTab is running without Screen Recording permissions. %@ won’t show.";
-"AltTab needs some permissions" = "AltTab needs some permissions";
+"CommandTabFree is running without Screen Recording permissions. %@ won’t show." = "CommandTabFree is running without Screen Recording permissions. %@ won’t show.";
+"CommandTabFree needs some permissions" = "CommandTabFree needs some permissions";
 "AltTab Pro" = "AltTab Pro";
 "AltTab Pro adds 4 features beyond the free switcher." = "AltTab Pro adds 4 features beyond the free switcher.";
 "AltTab Pro is still available" = "AltTab Pro is still available";
-"AltTab will show if the window is currently minimized or fullscreen with a status icon." = "AltTab will show if the window is currently minimized or fullscreen with a status icon.";
+"CommandTabFree will show if the window is currently minimized or fullscreen with a status icon." = "CommandTabFree will show if the window is currently minimized or fullscreen with a status icon.";
 "Always" = "Always";
 "Always send crash reports" = "Always send crash reports";
 "and press" = "and press";
@@ -118,7 +118,7 @@
 "Grant permission" = "Grant permission";
 "Group apps" = "Group apps";
 "Group tabs" = "Group tabs";
-"Help improve AltTab" = "Help improve AltTab";
+"Help improve CommandTabFree" = "Help improve CommandTabFree";
 "Hide" = "Hide";
 "Hide colored circles on mouse hover" = "Hide colored circles on mouse hover";
 "Hide Space number labels" = "Hide Space number labels";
@@ -142,7 +142,7 @@
 "Light" = "Light";
 "Lock search" = "Lock search";
 "Machine %@" = "Machine %@";
-"macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. AltTab cannot use them.\n\nYour change would assign one of these to: %@." = "macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. AltTab cannot use them.\n\nYour change would assign one of these to: %@.";
+"macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. CommandTabFree cannot use them.\n\nYour change would assign one of these to: %@." = "macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. CommandTabFree cannot use them.\n\nYour change would assign one of these to: %@.";
 "Manage activations, view receipts, etc" = "Manage activations, view receipts, etc";
 "Maybe later" = "Maybe later";
 "Medium" = "Medium";
@@ -174,7 +174,7 @@
 "Overridden in Shortcut:" = "Overridden in Shortcut:";
 "Paste your license key:" = "Paste your license key:";
 "Pick a machine to deactivate so you can activate here." = "Pick a machine to deactivate so you can activate here.";
-"Please drag AltTab into the Applications folder manually." = "Please drag AltTab into the Applications folder manually.";
+"Please drag CommandTabFree into the Applications folder manually." = "Please drag CommandTabFree into the Applications folder manually.";
 "Please fill in the form" = "Please fill in the form";
 "Preview selected window" = "Preview selected window";
 "Pro" = "Pro";
@@ -199,7 +199,7 @@
 "Screen including menu bar" = "Screen including menu bar";
 "Screen including mouse" = "Screen including mouse";
 "Screen Recording" = "Screen Recording";
-"Screen showing AltTab" = "Screen showing AltTab";
+"Screen showing CommandTabFree" = "Screen showing CommandTabFree";
 "Search" = "Search";
 "Search is a Pro feature." = "Search is a Pro feature.";
 "Search windows by typing" = "Search windows by typing";

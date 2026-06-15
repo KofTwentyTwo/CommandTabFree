@@ -184,7 +184,7 @@ enum ScreensToShowPreference: CaseIterable, MacroPreference {
     var localizedString: LocalizedString {
         switch self {
             case .all: return NSLocalizedString("All screens", comment: "")
-            case .showingAltTab: return NSLocalizedString("Screen showing AltTab", comment: "")
+            case .showingAltTab: return NSLocalizedString("Screen showing CommandTabFree", comment: "")
         }
     }
 }

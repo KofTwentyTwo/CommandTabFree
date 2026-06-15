@@ -153,7 +153,7 @@ class CliClient {
             print("Couldn't execute command. Is it correct?")
             exit(1)
         } catch {
-            print("AltTab.app needs to be running for CLI commands to work")
+            print("CommandTabFree.app needs to be running for CLI commands to work")
             exit(1)
         }
     }

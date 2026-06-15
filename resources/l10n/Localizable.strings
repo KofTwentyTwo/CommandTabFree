@@ -22,8 +22,11 @@
 /* No comment provided by engineer. */
 "A debug profile (versions, settings, hardware) is attached to help diagnose the issue." = "A debug profile (versions, settings, hardware) is attached to help diagnose the issue.";
 
+/* Attribution to the upstream project AltTab; do not translate the product names */
+"A free fork of AltTab by Louis Pontoise — GPL-3.0" = "A free fork of AltTab by Louis Pontoise — GPL-3.0";
+
 /* No comment provided by engineer. */
-"A new version of AltTab is available" = "A new version of AltTab is available";
+"A new version of CommandTabFree is available" = "A new version of CommandTabFree is available";
 
 /* Menubar option. %@ is AltTab */
 "About %@" = "About %@";
@@ -83,16 +86,7 @@
 "Alphabetical Order" = "Alphabetical Order";
 
 /* No comment provided by engineer. */
-"AltTab crashed last time you used it. Sending a crash report will help get the issue fixed" = "AltTab crashed last time you used it. Sending a crash report will help get the issue fixed";
-
-/* No comment provided by engineer. */
 "AltTab is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial." = "AltTab is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial.";
-
-/* Menubar callout. %@ is one or more feature names, e.g. Thumbnails */
-"AltTab is running without Screen Recording permissions. %@ won’t show." = "AltTab is running without Screen Recording permissions. %@ won’t show.";
-
-/* No comment provided by engineer. */
-"AltTab needs some permissions" = "AltTab needs some permissions";
 
 /* No comment provided by engineer. */
 "AltTab Pro" = "AltTab Pro";
@@ -102,9 +96,6 @@
 
 /* No comment provided by engineer. */
 "AltTab Pro is still available" = "AltTab Pro is still available";
-
-/* No comment provided by engineer. */
-"AltTab will show if the window is currently minimized or fullscreen with a status icon." = "AltTab will show if the window is currently minimized or fullscreen with a status icon.";
 
 /* No comment provided by engineer. */
 "Always" = "Always";
@@ -210,6 +201,18 @@
 
 /* No comment provided by engineer. */
 "Close window" = "Close window";
+
+/* No comment provided by engineer. */
+"CommandTabFree crashed last time you used it. Sending a crash report will help get the issue fixed" = "CommandTabFree crashed last time you used it. Sending a crash report will help get the issue fixed";
+
+/* Menubar callout. %@ is one or more feature names, e.g. Thumbnails */
+"CommandTabFree is running without Screen Recording permissions. %@ won’t show." = "CommandTabFree is running without Screen Recording permissions. %@ won’t show.";
+
+/* No comment provided by engineer. */
+"CommandTabFree needs some permissions" = "CommandTabFree needs some permissions";
+
+/* No comment provided by engineer. */
+"CommandTabFree will show if the window is currently minimized or fullscreen with a status icon." = "CommandTabFree will show if the window is currently minimized or fullscreen with a status icon.";
 
 /* No comment provided by engineer. */
 "Conflicting shortcut" = "Conflicting shortcut";
@@ -359,7 +362,7 @@
 "Group tabs" = "Group tabs";
 
 /* No comment provided by engineer. */
-"Help improve AltTab" = "Help improve AltTab";
+"Help improve CommandTabFree" = "Help improve CommandTabFree";
 
 /* No comment provided by engineer. */
 "Hide" = "Hide";
@@ -431,7 +434,7 @@
 "Machine %@" = "Machine %@";
 
 /* No comment provided by engineer. */
-"macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. AltTab cannot use them.\n\nYour change would assign one of these to: %@." = "macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. AltTab cannot use them.\n\nYour change would assign one of these to: %@.";
+"macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. CommandTabFree cannot use them.\n\nYour change would assign one of these to: %@." = "macOS reserves ⌘⌥⎋, ⌘⌥⇧⎋, and ⌘⌥⇧⌃⎋ for Force Quit and they cannot be unbound. CommandTabFree cannot use them.\n\nYour change would assign one of these to: %@.";
 
 /* No comment provided by engineer. */
 "Manage activations, view receipts, etc" = "Manage activations, view receipts, etc";
@@ -527,7 +530,7 @@
 "Pick a machine to deactivate so you can activate here." = "Pick a machine to deactivate so you can activate here.";
 
 /* LetsMove replacement alert */
-"Please drag AltTab into the Applications folder manually." = "Please drag AltTab into the Applications folder manually.";
+"Please drag CommandTabFree into the Applications folder manually." = "Please drag CommandTabFree into the Applications folder manually.";
 
 /* No comment provided by engineer. */
 "Please fill in the form" = "Please fill in the form";
@@ -602,7 +605,7 @@
 "Screen Recording" = "Screen Recording";
 
 /* No comment provided by engineer. */
-"Screen showing AltTab" = "Screen showing AltTab";
+"Screen showing CommandTabFree" = "Screen showing CommandTabFree";
 
 /* No comment provided by engineer. */
 "Search" = "Search";

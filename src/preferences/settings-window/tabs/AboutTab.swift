@@ -15,11 +15,12 @@ class AboutTab {
             BoldLabel(App.name),
             NSTextField(wrappingLabelWithString: NSLocalizedString("Version", comment: "") + " " + App.version),
             NSTextField(wrappingLabelWithString: App.licence),
+            NSTextField(wrappingLabelWithString: NSLocalizedString("A free fork of AltTab by Louis Pontoise — GPL-3.0", comment: "Attribution to the upstream project AltTab; do not translate the product names")),
             HyperlinkLabel(NSLocalizedString("Website", comment: ""), Endpoints.website),
             HyperlinkLabel(NSLocalizedString("Source code", comment: ""), App.repository),
         ], .vertical)
         appText.spacing = GridView.interPadding / 2
-        let rowToSeparate = 3
+        let rowToSeparate = 4
         appText.views[rowToSeparate].topAnchor.constraint(equalTo: appText.views[rowToSeparate - 1].bottomAnchor, constant: GridView.interPadding).isActive = true
         let appInfo = NSStackView(views: [appIcon, appText])
         appIcon.translatesAutoresizingMaskIntoConstraints = false
@@ -150,7 +151,7 @@ class AboutWindow: NSPanel {
         let weekCount = UsageStats.count("triggers", since: now.addingTimeInterval(-7 * 24 * 3600))
         let monthCount = UsageStats.count("triggers", since: now.addingTimeInterval(-30 * 24 * 3600))
         let yearCount = UsageStats.count("triggers", since: now.addingTimeInterval(-365 * 24 * 3600))
-        let markdown = "## \(NSLocalizedString("Usage", comment: ""))\n\nYou have used AltTab:\n\u{2022} **\(weekCount)** times in the past week\n\u{2022} **\(monthCount)** times in the past month\n\u{2022} **\(yearCount)** times in the past year"
+        let markdown = "## \(NSLocalizedString("Usage", comment: ""))\n\nYou have used \(App.name):\n\u{2022} **\(weekCount)** times in the past week\n\u{2022} **\(monthCount)** times in the past month\n\u{2022} **\(yearCount)** times in the past year"
         usageTextView.textStorage!.setAttributedString(Markdown.toAttributedString(markdown))
         usageTextView.layoutManager!.ensureLayout(for: usageTextView.textContainer!)
         let usedRect = usageTextView.layoutManager!.usedRect(for: usageTextView.textContainer!)
