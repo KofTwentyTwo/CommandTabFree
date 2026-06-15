@@ -51,7 +51,7 @@ jobs:
             echo "::error::PAYWALL RELOCKED: 'depaywall' marker missing from $F — the de-paywall flip was lost in a merge. Refresh the patch (§6.2)."
             exit 1
           }
-          grep -Eq 'if[[:space:]]+false[[:space:]]*\{' "$F" || {
+          grep -Eq 'guard[[:space:]]+false[[:space:]]+else' "$F" || {
             echo "::error::PAYWALL RELOCKED: 'if false { … }' wrap missing from $F — the de-paywall body-suppress was lost. Refresh the patch (§6.2)."
             exit 1
           }

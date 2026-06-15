@@ -68,12 +68,12 @@ jobs:
       # just before action-gh-release as belt-and-suspenders.
       - name: anti-relock — verify de-paywall marker present (Guard B)
         run: |
-          grep -q 'alt-tab-free \[depaywall\]' src/pro/license/LicenseManager.swift \
+          grep -q 'depaywall' src/pro/license/LicenseManager.swift \
             || { echo "PAYWALL RELOCKED: depaywall marker missing from computeState()"; exit 1; }
           # The marker proves the patch is present; pair with the if-false wrap the patch introduces.
           # A bare `return .pro` grep is NOT load-bearing (it matches the unpatched line 187 too).
-          grep -Eq 'if[[:space:]]+false[[:space:]]*\{' src/pro/license/LicenseManager.swift \
-            || { echo "PAYWALL RELOCKED: 'if false { ... }' wrap missing from computeState()"; exit 1; }
+          grep -Eq 'guard[[:space:]]+false[[:space:]]+else' src/pro/license/LicenseManager.swift \
+            || { echo "PAYWALL RELOCKED: 'guard false else' (forced .pro) missing from computeState()"; exit 1; }
       - name: anti-conflict — no unresolved merge markers (Guard C)
         run: |
           if git -c grep.lineNumber=false grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':(exclude)docs/'; then
@@ -168,10 +168,10 @@ jobs:
       - name: anti-relock + anti-conflict re-check (belt-and-suspenders)
         if: github.event_name == 'push' && steps.release-gate.outputs.signing-ready == 'true'
         run: |
-          grep -q 'alt-tab-free \[depaywall\]' src/pro/license/LicenseManager.swift \
+          grep -q 'depaywall' src/pro/license/LicenseManager.swift \
             || { echo "PAYWALL RELOCKED: depaywall marker missing from computeState()"; exit 1; }
-          grep -Eq 'if[[:space:]]+false[[:space:]]*\{' src/pro/license/LicenseManager.swift \
-            || { echo "PAYWALL RELOCKED: 'if false { ... }' wrap missing from computeState()"; exit 1; }
+          grep -Eq 'guard[[:space:]]+false[[:space:]]+else' src/pro/license/LicenseManager.swift \
+            || { echo "PAYWALL RELOCKED: 'guard false else' (forced .pro) missing from computeState()"; exit 1; }
           if git -c grep.lineNumber=false grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':(exclude)docs/'; then
             echo "UNRESOLVED CONFLICT MARKERS present — resolve before release"; exit 1
           fi
