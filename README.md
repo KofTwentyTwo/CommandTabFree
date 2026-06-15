@@ -19,9 +19,11 @@ brew install --cask koftwentytwo/tap/commandtabfree
 ```
 
 CommandTabFree is **not yet signed or notarized**, so the cask removes the download
-quarantine to avoid a Gatekeeper prompt (right-click the app and choose **Open** if you
-install the `.zip` by hand). On first launch, grant **Accessibility** and **Screen
-Recording** in System Settings. Universal binary (Apple Silicon + Intel), macOS 10.13+.
+quarantine to avoid a Gatekeeper prompt. You can also download the **`.dmg`** (or `.zip`)
+from the [Releases](https://github.com/KofTwentyTwo/CommandTabFree/releases) page and drag
+CommandTabFree to Applications — since it's unsigned, right-click the app and choose **Open**
+on first launch. On first launch, grant **Accessibility** and **Screen Recording** in System
+Settings. Universal binary (Apple Silicon + Intel), macOS 10.13+.
 
 ## Based on AltTab by Louis Pontoise
 
