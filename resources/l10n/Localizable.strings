@@ -28,7 +28,7 @@
 /* No comment provided by engineer. */
 "A new version of CommandTabFree is available" = "A new version of CommandTabFree is available";
 
-/* Menubar option. %@ is AltTab */
+/* Menubar option. %@ is CommandTabFree */
 "About %@" = "About %@";
 
 /* No comment provided by engineer. */
@@ -86,16 +86,16 @@
 "Alphabetical Order" = "Alphabetical Order";
 
 /* No comment provided by engineer. */
-"AltTab is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial." = "AltTab is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial.";
+"CommandTabFree is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial." = "CommandTabFree is a free, open-source window switcher for macOS. Pro features are available with a 14-day free trial.";
 
 /* No comment provided by engineer. */
-"AltTab Pro" = "AltTab Pro";
+"CommandTabFree Pro" = "CommandTabFree Pro";
 
 /* No comment provided by engineer. */
-"AltTab Pro adds 4 features beyond the free switcher." = "AltTab Pro adds 4 features beyond the free switcher.";
+"CommandTabFree Pro adds 4 features beyond the free switcher." = "CommandTabFree Pro adds 4 features beyond the free switcher.";
 
 /* No comment provided by engineer. */
-"AltTab Pro is still available" = "AltTab Pro is still available";
+"CommandTabFree Pro is still available" = "CommandTabFree Pro is still available";
 
 /* No comment provided by engineer. */
 "Always" = "Always";
@@ -344,7 +344,7 @@
 "Gesture" = "Gesture";
 
 /* No comment provided by engineer. */
-"Get more from AltTab with Pro" = "Get more from AltTab with Pro";
+"Get more from CommandTabFree with Pro" = "Get more from CommandTabFree with Pro";
 
 /* Menubar option */
 "Get Pro" = "Get Pro";
@@ -422,7 +422,7 @@
 "License doesn't cover this version" = "License doesn't cover this version";
 
 /* No comment provided by engineer. */
-"License will remain valid and usable to activate AltTab on any machine" = "License will remain valid and usable to activate AltTab on any machine";
+"License will remain valid and usable to activate CommandTabFree on any machine" = "License will remain valid and usable to activate CommandTabFree on any machine";
 
 /* No comment provided by engineer. */
 "Light" = "Light";
@@ -562,7 +562,7 @@
 /* No comment provided by engineer. */
 "Pro Lifetime license activated for %@" = "Pro Lifetime license activated for %@";
 
-/* %@ is AltTab */
+/* %@ is CommandTabFree */
 "Quit %@" = "Quit %@";
 
 /* No comment provided by engineer. */
@@ -920,7 +920,7 @@
 "You can’t undo this action." = "You can’t undo this action.";
 
 /* No comment provided by engineer. */
-"You have 14 days to try all Pro features. After that, Pro features will step back and the core window switcher will keep working exactly as before.\n\nAltTab stays free and open-source. Pro is an optional one-time purchase that funds continued development." = "You have 14 days to try all Pro features. After that, Pro features will step back and the core window switcher will keep working exactly as before.\n\nAltTab stays free and open-source. Pro is an optional one-time purchase that funds continued development.";
+"You have 14 days to try all Pro features. After that, Pro features will step back and the core window switcher will keep working exactly as before.\n\nCommandTabFree stays free and open-source. Pro is an optional one-time purchase that funds continued development." = "You have 14 days to try all Pro features. After that, Pro features will step back and the core window switcher will keep working exactly as before.\n\nCommandTabFree stays free and open-source. Pro is an optional one-time purchase that funds continued development.";
 
 /* No comment provided by engineer. */
 "You may need to disable some conflicting system gestures" = "You may need to disable some conflicting system gestures";
@@ -938,10 +938,10 @@
 "You've been using %d Pro features.\nThey'll switch back to defaults on Day 15." = "You've been using %d Pro features.\nThey'll switch back to defaults on Day 15.";
 
 /* No comment provided by engineer. */
-"You've used AltTab %@ times — %@ of those used Pro features." = "You've used AltTab %1$@ times — %2$@ of those used Pro features.";
+"You've used CommandTabFree %@ times — %@ of those used Pro features." = "You've used CommandTabFree %1$@ times — %2$@ of those used Pro features.";
 
 /* No comment provided by engineer. */
-"You've used AltTab %@ times." = "You've used AltTab %@ times.";
+"You've used CommandTabFree %@ times." = "You've used CommandTabFree %@ times.";
 
 /* No comment provided by engineer. */
 "Your 14-day Pro trial just ended" = "Your 14-day Pro trial just ended";
