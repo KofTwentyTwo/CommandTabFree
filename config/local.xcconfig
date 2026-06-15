@@ -23,6 +23,12 @@
 PRODUCT_NAME = CommandTabFree
 PRODUCT_BUNDLE_IDENTIFIER = com.koftwentytwo.commandtabfree
 
+// Local dev default for the build version. Info.plist's CFBundleVersion/CFBundleShortVersionString
+// are $(CURRENT_PROJECT_VERSION); CI's replace_environment_variables_in_app.sh APPENDS the real
+// release value (which wins by xcconfig last-assignment). Without this, a plain local build leaves
+// the version empty and App.version (src/App.swift:14, `as! String`) crashes on launch.
+CURRENT_PROJECT_VERSION = 0.0.0
+
 // --- Hosts (overrides base.xcconfig :20-21) ---
 // OWNER-OVERRIDABLE-BEFORE-PUBLISH: fork-owned hosts.
 // TODO: replace fork.invalid with the fork's real web host. DOMAIN must serve
