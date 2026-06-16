@@ -33,5 +33,20 @@
         type="application/octet-stream"/>
     </item>
 
+
+    <item>
+      <title>Version 100.2.1</title>
+      <pubDate>Tue, 16 Jun 2026 21:21:13 +0000</pubDate>
+      <description>Corresponding source (GPL-3.0): https://github.com/KofTwentyTwo/CommandTabFree/archive/refs/tags/v100.2.1.tar.gz</description>
+      <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://github.com/KofTwentyTwo/CommandTabFree/releases/tag/v100.2.1</sparkle:releaseNotesLink>
+      <enclosure
+        url="https://github.com/KofTwentyTwo/CommandTabFree/releases/download/v100.2.1/CommandTabFree-100.2.1.zip"
+        sparkle:version="100.2.1"
+        sparkle:shortVersionString="100.2.1"
+        sparkle:edSignature="uS6lohQf8BGHLuC+I7uCKQv/jg4357tK3COkt92wiiyfUJpSiRXKM/9ghARBWKzEZ+oAu6gaIw5A2jhrbHjfCQ==" length="8384034"
+        type="application/octet-stream"/>
+    </item>
+
   </channel>
 </rss>
