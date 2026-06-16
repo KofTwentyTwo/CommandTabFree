@@ -30,16 +30,13 @@ PRODUCT_BUNDLE_IDENTIFIER = com.koftwentytwo.commandtabfree
 CURRENT_PROJECT_VERSION = 0.0.0
 
 // --- Hosts (overrides base.xcconfig :20-21) ---
-// OWNER-OVERRIDABLE-BEFORE-PUBLISH: fork-owned hosts.
-// TODO: replace fork.invalid with the fork's real web host. DOMAIN must serve
-//       https://<DOMAIN>/appcast.xml (Sparkle feed) and /support, or update checks /
-//       the in-app Support affordance 404. fork.invalid is a deliberately NON-routable
-//       placeholder (RFC 6761 reserved .invalid TLD) so nothing phones home before publish.
-DOMAIN = fork.invalid
-// TODO: API_DOMAIN drives the user-feedback POST (FeedbackWindow). The activate
-//       fingerprint POST is closed separately at the handleCustomUrl handler (§2/§3.4),
-//       so this may be made ROUTABLE for feedback without re-arming exfiltration.
-//       Decide feedback strategy at bootstrap (§3.4 option a/b/c).
+// DOMAIN serves the Sparkle appcast at https://<DOMAIN>/appcast.xml. Set 2026-06-16 to the repo's
+// GitHub Pages site (gh-pages branch, published by scripts/update_appcast.sh). A kof22.com custom
+// domain can be added later — GitHub redirects the github.io URL, so shipped builds keep updating.
+// (/support still 404s here — harmless until a support page exists.)
+DOMAIN = koftwentytwo.github.io/CommandTabFree
+// API_DOMAIN drives the user-feedback POST (FeedbackWindow) — left NON-routable: feedback is deferred
+// (§3.4). The activate fingerprint POST is closed separately at the handleCustomUrl handler.
 API_DOMAIN = fork.invalid/api
 
 // --- Code signing (overrides release.xcconfig :5) ---

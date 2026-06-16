@@ -64,8 +64,8 @@
 	     Auto-checks stay off (below) until DOMAIN serves a real appcast host. -->
 	<string>1YfoCJDk/T8GQx1Gpf3O4ApFgDkBiN6oe/z/Kfnxs/M=</string>
 	<key>SUEnableAutomaticChecks</key>
-	<!-- alt-tab-free: off until DOMAIN serves a real appcast (avoids failed update checks). -->
-	<string>false</string>
+	<!-- alt-tab-free: enabled 2026-06-16 — DOMAIN serves the appcast on GitHub Pages (gh-pages). -->
+	<string>true</string>
 	<key>SUScheduledCheckInterval</key>
 	<string>604800</string>
 

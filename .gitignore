@@ -20,3 +20,6 @@ codesign.p12
 !/.claude/skills/
 /scripts/l10n/missing-translations.json
 /ai/output/
+# alt-tab-free [depaywall]: the Sparkle feed is published OUT OF TREE to the gh-pages branch by
+# scripts/update_appcast.sh; the in-tree appcast.xml is removed (PLAN §3.3).
+/appcast.xml
