@@ -1,3 +1,5 @@
+## [100.2.1](https://github.com/KofTwentyTwo/CommandTabFree/compare/v100.2.0...v100.2.1) (2026-06-16)
+
 # [100.2.0](https://github.com/KofTwentyTwo/CommandTabFree/compare/v100.1.0...v100.2.0) (2026-06-16)
 
 
