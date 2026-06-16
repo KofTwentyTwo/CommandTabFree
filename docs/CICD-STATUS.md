@@ -1,7 +1,7 @@
 # CI/CD readiness — CommandTabFree (fork of lwouis/alt-tab-macos)
 
 **Date:** 2026-06-16  **Branch:** `master`  **Repo:** `KofTwentyTwo/CommandTabFree` (public)
-**Status:** full release pipeline **proven** on the real runner — signed + notarized **v100.1.0** released (run `27643432063`, Developer ID `James Maes (2X834TJ5MA)`, `spctl`-accepted + stapled). Non-release pushes stay green via the ad-hoc build path (run `27634828800`).
+**Status:** publishing pipeline + Sparkle auto-update **LIVE** — signed + notarized **v100.2.0** released (Developer ID `James Maes (2X834TJ5MA)`, `spctl`-accepted + stapled), feed served on GitHub Pages (`koftwentytwo.github.io/CommandTabFree/appcast.xml`). The release apparatus (cert-import → sign-build → notarize → appcast → semantic-release → gh-release) is gated on a `will-release` signal (empty `VERSION.txt` ⇒ no release), so docs/ci pushes build+test without cutting a release or needing `[skip ci]`.
 **Authoritative design:** `docs/PLAN-maintained-fork.md` §4; owner checklist `docs/EXECUTION-STATUS.md` §3.4/§3.5.
 
 This is the state after the CI-fix pass. The pass applied only **safe, owner-secret-independent**

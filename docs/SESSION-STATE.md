@@ -1,6 +1,6 @@
 # SESSION-STATE — CommandTabFree (de-paywalled AltTab fork)
 
-_Updated 2026-06-16. `master` carries the fork; the **full CI/CD publishing pipeline is LIVE** — signed + notarized **v100.1.0** released and Gatekeeper-accepted. Homebrew tap live._
+_Updated 2026-06-16. `master` carries the fork; the **full CI/CD publishing pipeline + auto-update are LIVE** — signed + notarized **v100.2.0** released (Gatekeeper-accepted), Sparkle feed served on GitHub Pages. Homebrew tap live._
 
 ## ✅ SIGNED + NOTARIZED RELEASE LIVE
 
@@ -8,12 +8,13 @@ The complete release pipeline ran green end-to-end (run `27643432063`, commit `2
 
 **How signing is wired:** `config/local.xcconfig` sets `CODE_SIGN_IDENTITY` + `CODE_SIGN_STYLE = Manual` + `TEAM_ID 2X834TJ5MA`; the vendored Sparkle helpers (`vendor/Sparkle/Helpers/*`) are committed **re-signed** under the same Developer ID; `setup_ci_master.sh` imports the cert with an optional `APPLE_P12_PASSWORD`. The release secrets (`APPLE_P12_CERTIFICATE`/`APPLE_P12_PASSWORD`/`APPLE_ID`/`APPLE_PASSWORD`/`APPLE_TEAM_ID` + `SPARKLE_ED_PRIVATE_KEY`) are set in the `production` env. Getting here also required two CI fixes earlier this session: `d1e1b296` (regenerate base `Localizable.strings` to clear the genstrings gate) and `6070f0cb` (ad-hoc build until the cert existed).
 
-**Remaining (NOT yet done):**
-- **Auto-update** (deferred by choice): `appcast.xml` is published to gh-pages, but the app's feed URL is still `fork.invalid` and `SUEnableAutomaticChecks=false`. To enable N→N+1 updates: set a real `DOMAIN` (kof22.com), serve gh-pages at `https://<DOMAIN>/appcast.xml`, flip checks on.
-- **Homebrew cask**: now notarized — drop the quarantine-strip postflight and bump the cask to v100.1.0.
-- **Upstream-sync**: `.fork-sync-state` reset to `v11.3.0` (the release tail no longer clobbers it — see ci_cd.yml). Before enabling upstream-sync, advance the cursor from the sync-merge flow (recording the UPSTREAM tag), and provision `SYNC_BOT_TOKEN` + an external cron. The 3 sync labels exist.
+**Auto-update is LIVE (shipped in v100.2.0):** `DOMAIN = koftwentytwo.github.io/CommandTabFree`, `SUEnableAutomaticChecks = true`, the in-tree `appcast.xml` skeleton removed + gitignored. GitHub Pages serves `https://koftwentytwo.github.io/CommandTabFree/appcast.xml` (gh-pages branch, published by `update_appcast.sh`); the feed carries v100.1.0 + v100.2.0 enclosures. A kof22.com custom domain can be added later (GitHub redirects the github.io URL — no broken builds). **Homebrew cask** bumped to v100.2.0 + quarantine-strip postflight dropped (`KofTwentyTwo/homebrew-tap`). **Release-gate decoupled:** the sign/notarize/release apparatus is gated on a `will-release` signal (empty `VERSION.txt` ⇒ no release), so docs/ci pushes build+test without cutting a release or needing `[skip ci]` (ci_cd.yml).
 
-**Repo facts:** GitHub = `KofTwentyTwo/CommandTabFree` (local dir `~/Git.Local/kof22/alt-tab-free`, SSH remote). Latest release **v100.1.0** (signed + notarized zip). ⌘⇥ icon FINAL. Owner-gated checklist: `docs/TODO.md`.
+**Remaining (owner-gated, NOT automatable):**
+- **Upstream-sync**: provision `SYNC_BOT_TOKEN` + an external `repository_dispatch` cron; re-wire the `.fork-sync-state` cursor advance into the sync-merge flow (recording the UPSTREAM tag). `.fork-sync-state` = `v11.3.0`; the 3 sync labels exist.
+- **(Optional)** kof22.com custom domain for the appcast (one DNS CNAME → `koftwentytwo.github.io`).
+
+**Repo facts:** GitHub = `KofTwentyTwo/CommandTabFree` (local dir `~/Git.Local/kof22/alt-tab-free`, SSH remote). Latest release **v100.2.0** (signed + notarized + auto-updating). ⌘⇥ icon FINAL. Owner-gated checklist: `docs/TODO.md`.
 
 
 ## What this is
