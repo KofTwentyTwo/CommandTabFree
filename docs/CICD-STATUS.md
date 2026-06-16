@@ -1,6 +1,7 @@
 # CI/CD readiness — CommandTabFree (fork of lwouis/alt-tab-macos)
 
-**Date:** 2026-06-15  **Branch:** `depaywall-free`  **Repo:** `KofTwentyTwo/CommandTabFree` (public)
+**Date:** 2026-06-16  **Branch:** `master`  **Repo:** `KofTwentyTwo/CommandTabFree` (public)
+**Status:** push CI verified **fully green** on the real runner (run `27634828800`, commit `6070f0cb`).
 **Authoritative design:** `docs/PLAN-maintained-fork.md` §4; owner checklist `docs/EXECUTION-STATUS.md` §3.4/§3.5.
 
 This is the state after the CI-fix pass. The pass applied only **safe, owner-secret-independent**
@@ -36,14 +37,15 @@ already fixed on this branch; this pass ensures it does not go RED again on miss
 | **Guard A** anti-relock unit tests (`run_tests.sh`, Test scheme) | `ci_cd.yml` push+PR; `guard.yml` PR (macos-15) | High — verified GREEN in EXECUTION-STATUS §2.2 (493 exec, 16 skipped, 0 fail) |
 | **Guard B** de-paywall marker + `if false` wrap grep | `ci_cd.yml` first push step + PR; `guard.yml` PR | High — marker present at `LicenseManager.swift:177` |
 | **Guard C** unresolved-conflict-marker grep | `ci_cd.yml` first push step + PR; `guard.yml` PR | High |
-| **Compile the full tree** (`build_app.sh`, unsigned/ad-hoc) | `ci_cd.yml` push | High — EXECUTION-STATUS §2.1 BUILD SUCCEEDED unsigned |
+| **Compile the full tree** (`build_app.sh`, **ad-hoc**) | `ci_cd.yml` push | Verified GREEN on CI (run 27634828800). NOTE: the bare `build_app.sh` inherits upstream's Developer ID from `config/release.xcconfig:5` and fails with exit 65 on CI; the build step now runs ad-hoc (`CODE_SIGN_IDENTITY=-`) when `release-gate` is not signing-ready, and signed otherwise. `build_app.sh` forwards xcodebuild overrides via `"$@"`. |
 | **commitlint** (push range + PR base..head, with `ignores`) | `ci_cd.yml` | Med-High — `ignores` should absorb upstream merge msgs; confirm on FIRST real sync PR |
 | **generated-files-up-to-date** check | `ci_cd.yml` push+PR | High |
 | **semantic-release dry-run** version compute (`determine_next_version.sh`) | `ci_cd.yml` push | High — dry-run, no push, no secret |
 | **Release tail SKIPS cleanly** when secrets absent (warning, not failure) | `ci_cd.yml` `release-gate` | High — `signing-ready=false` path emits `::warning::` and skips |
 
-> Note: full GREEN on the GitHub-hosted **macos-15** runner with **Xcode 26.0.1** still needs a real CI
-> run to confirm (runner availability + Xcode path). The logic is correct; the runtime is unverified here.
+> Note: full GREEN on the GitHub-hosted **macos-15** runner with **Xcode 26.0.1** is now CONFIRMED by a
+> real run (`27634828800`, commit `6070f0cb`): gate + `run_tests.sh` + ad-hoc `build_app.sh` all pass and
+> the release tail skips cleanly on absent secrets.
 
 ## (B) READY — flips ON automatically when the owner adds secret X
 
