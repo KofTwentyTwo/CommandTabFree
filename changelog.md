@@ -1,3 +1,10 @@
+# [100.2.0](https://github.com/KofTwentyTwo/CommandTabFree/compare/v100.1.0...v100.2.0) (2026-06-16)
+
+
+### Features
+
+* **updates:** enable Sparkle auto-update via GitHub Pages appcast ([45457cb](https://github.com/KofTwentyTwo/CommandTabFree/commit/45457cb))
+
 # [100.1.0](https://github.com/KofTwentyTwo/CommandTabFree/compare/v100.0.3...v100.1.0) (2026-06-16)
 
 
