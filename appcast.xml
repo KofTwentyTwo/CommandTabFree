@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+  <channel>
+    <title>alt-tab-free</title>
+    <language>en</language>
+
+    <item>
+      <title>Version 100.1.0</title>
+      <pubDate>Tue, 16 Jun 2026 19:48:09 +0000</pubDate>
+      <description>Corresponding source (GPL-3.0): https://github.com/KofTwentyTwo/CommandTabFree/archive/refs/tags/v100.1.0.tar.gz</description>
+      <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://github.com/KofTwentyTwo/CommandTabFree/releases/tag/v100.1.0</sparkle:releaseNotesLink>
+      <enclosure
+        url="https://github.com/KofTwentyTwo/CommandTabFree/releases/download/v100.1.0/CommandTabFree-100.1.0.zip"
+        sparkle:version="100.1.0"
+        sparkle:shortVersionString="100.1.0"
+        sparkle:edSignature="5QC/UsEOhct3HiXfsC2tqWSibsegSzwmYQ+WoFnzNzM8PBqs8lPUyDQtzIMQ763NLjdxN1kO5ycf65GmhwG0BA==" length="8384035"
+        type="application/octet-stream"/>
+    </item>
+
+  </channel>
+</rss>
