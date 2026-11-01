@@ -1,0 +1,8 @@
+# Approved historical findings (exact fingerprints only, no patterns): readOnlyToken values in contributor/l10n scripts and an AppCenter
+# encryption key size constant, all introduced upstream before this fork. Any new or different finding is still reported.
+9147a4a864689ab94531c75b1b04d7c4f3581def:vendor/AppCenter/Sources/AppCenter/Internals/Util/MSACEncrypterPrivate.h:generic-api-key:20
+44007195b77d6809048c134c78a6d68d1895704f:scripts/update_readme_and_website.sh:generic-api-key:6
+528028d41bbbe57ea90b89a04a96a114872c405f:scripts/export_l10n_strings_to_poeditor.sh:generic-api-key:5
+d544ff3b7a6d4023ccd25783008836f50ec5b79d:scripts/import_l10n_strings_from_poeditor.sh:generic-api-key:5
+9a04c275cb9fba763c2272acc09055bf6476755d:scripts/update_contributors.sh:generic-api-key:5
+13c1cb0d000401df11a1c496b5273338db1886d7:scripts/import_l10n_strings_from_poeditor.sh:generic-api-key:6
