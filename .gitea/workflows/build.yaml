@@ -27,5 +27,5 @@ jobs:
         # grogu has only Xcode 27.2, which rejects the app's 10.13 deployment target (the shipping build is the GitHub
         # mirror's, on Xcode 26.0.1). This compile check builds at 12.0 with the same deprecation downgrade as
         # config/test-base.xcconfig; every other Swift warning stays an error.
-        xcodebuild -quiet -project alt-tab-macos.xcodeproj -scheme Release -derivedDataPath DerivedData CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \n          MACOSX_DEPLOYMENT_TARGET=12.0 SWIFT_TREAT_WARNINGS_AS_ERRORS=NO 'OTHER_SWIFT_FLAGS=$(inherited) -warnings-as-errors -Wwarning DeprecatedDeclaration' build
+        xcodebuild -quiet -project alt-tab-macos.xcodeproj -scheme Release -derivedDataPath DerivedData CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO MACOSX_DEPLOYMENT_TARGET=12.0 SWIFT_TREAT_WARNINGS_AS_ERRORS=NO 'OTHER_SWIFT_FLAGS=$(inherited) -warnings-as-errors -Wwarning DeprecatedDeclaration' build
         xcodebuild -quiet -project alt-tab-macos.xcodeproj -scheme Test -configuration Release -derivedDataPath DerivedData build-for-testing
