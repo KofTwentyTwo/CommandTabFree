@@ -1,0 +1,31 @@
+# Gitea CI on the shared KofTwentyTwo/ci-workflows macOS workflow (grogu). The .github workflows keep
+# running on the GitHub mirror (release, notarization, appcast); this one is build only and unsigned.
+#
+#   Guard B  the de-paywall marker and the if-false wrap are still in computeState() (docs/PLAN-maintained-fork.md §4.4)
+#   Guard C  no unresolved merge conflict markers in the tree
+#   build    the Release scheme, unsigned (a compile check at macOS 12.0: grogu has only Xcode 27)
+#   Guard A  the Test scheme is compiled (build-for-testing) but not run: the grogu runner has no GUI session for
+#            testmanagerd. Run scripts/run_tests.sh locally before merging (docs/contributing.md).
+name: build
+on:
+  push:
+    branches: ['**']
+jobs:
+  macos:
+    uses: self:KofTwentyTwo/ci-workflows/.gitea/workflows/macos.yaml@v1
+    with:
+      commands: |
+        F=src/pro/license/LicenseManager.swift
+        [ -f "$F" ] || { echo "::error::Guard B: $F not found; chokepoint moved? Refresh the de-paywall patch (§6.2)."; exit 1; }
+        grep -q 'depaywall' "$F" || { echo "::error::PAYWALL RELOCKED: 'depaywall' marker missing from $F (§6.2)."; exit 1; }
+        grep -Eq 'guard[[:space:]]+false[[:space:]]+else' "$F" || { echo "::error::PAYWALL RELOCKED: 'if false { … }' wrap missing from $F (§6.2)."; exit 1; }
+        echo "Guard B OK"
+        if git -c grep.lineNumber=false grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':(exclude)docs/'; then
+          echo "::error::UNRESOLVED CONFLICT MARKERS present; resolve before merge (§4.4 Guard C)."; exit 1
+        fi
+        echo "Guard C OK"
+        # grogu has only Xcode 27.2, which rejects the app's 10.13 deployment target (the shipping build is the GitHub
+        # mirror's, on Xcode 26.0.1). This compile check builds at 12.0 with the same deprecation downgrade as
+        # config/test-base.xcconfig; every other Swift warning stays an error.
+        xcodebuild -quiet -project alt-tab-macos.xcodeproj -scheme Release -derivedDataPath DerivedData CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO MACOSX_DEPLOYMENT_TARGET=12.0 SWIFT_TREAT_WARNINGS_AS_ERRORS=NO 'OTHER_SWIFT_FLAGS=$(inherited) -warnings-as-errors -Wwarning DeprecatedDeclaration' build
+        xcodebuild -quiet -project alt-tab-macos.xcodeproj -scheme Test -configuration Release -derivedDataPath DerivedData build-for-testing

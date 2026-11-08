@@ -319,7 +319,7 @@ class ExceptionsTab {
         // BundleId changed (or first paint): show a synchronous placeholder, then resolve async.
         row.setIcon(AppDisplayInfo.genericIcon, size: iconSize)
         row.setContent(bundleId, summary)
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInitiated).async { [weak row] in
             let info = AppDisplayInfo.resolve(bundleId: bundleId)
             DispatchQueue.main.async { [weak row] in
                 guard let row else { return }

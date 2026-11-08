@@ -11,6 +11,12 @@ This project has minimal dependency on Xcode-only features (e.g. InterfaceBuilde
 * `scripts/codesign/setup_local.sh` to generate a local self-signed certificate, to avoid having to re-check the `System Preferences > Security & Privacy` permissions on every build
 * Either open `alt-tab-macos.xcodeproj` with Xcode, or use the CLI: `xcodebuild -project alt-tab-macos.xcodeproj -scheme Debug` to build the .app with the `Debug` build configuration
 
+### Tests (run locally before merging)
+
+The Gitea CI (`.gitea/workflows/build.yaml`) runs Guards B and C (the de-paywall markers and conflict markers), builds the `Release` scheme unsigned and compiles the `Test` scheme (`build-for-testing`), but does not run the tests: its macOS runner has no GUI session, so `xcodebuild test` cannot reach `testmanagerd`. Run them, including the anti-relock tests in `src/pro/license/LicenseManagerTests.swift` (Guard A, `docs/PLAN-maintained-fork.md` §4.4), locally before merging, especially an upstream sync:
+
+* `scripts/run_tests.sh` (the `Test` scheme, `-configuration Release`)
+
 ## Mac development
 
 Mac development ecosystem is pretty terrible in general. They keep piling on the tech stacks on top of each other, so you have C APIs, ObjC APIs, Swift APIs, Interface builder, Playgrounds, Swift UI, Mac Catalyst. All these are bridging with each other with a bunch of macros, SDKs glue, compiler flags, compatibility mode, XCode legacy build system, etc. For alt-tab, we are on Swift 5.0. Note that swift just recently started being stable, but overall any change of version breaks a lot of stuff. Swift itself is the mainstream language with the worst governance I’ve seen in modern times.
