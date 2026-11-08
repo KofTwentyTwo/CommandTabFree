@@ -14,6 +14,8 @@ jobs:
   macos:
     uses: self:KofTwentyTwo/ci-workflows/.gitea/workflows/macos.yaml@v1
     with:
+      # Same Xcode as .github/workflows/ci_cd.yml: Xcode 27 no longer accepts the app's 10.13 deployment target.
+      xcode: '26.0.1'
       commands: |
         F=src/pro/license/LicenseManager.swift
         [ -f "$F" ] || { echo "::error::Guard B: $F not found; chokepoint moved? Refresh the de-paywall patch (§6.2)."; exit 1; }
